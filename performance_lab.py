@@ -7,20 +7,32 @@
 # Output: 3
 
 def most_frequent(numbers):
-    for num in numbers:
-        if numbers.count(num) == max(numbers.count(n) for n in numbers):
-            return num
-        else:
-            continue
+    #Optimal solution
+    if not numbers:
+        return None
 
+    counts = {}
+    max_count = 0
+    max_val = None
+
+    for x in numbers:
+        counts[x] = counts.get(x, 0) + 1
+        if counts[x] > max_count:
+            max_count = counts[x]
+            max_val = x
+
+    return max_val
 """
 Time and Space Analysis for problem 1:
 - Best-case: O(n)
-- Worst-case: O(n^2)
-- Average-case: O(n^2)
-- Space complexity: O(1)
-- Why this approach? Simple and straightforward using built-in methods.
-- Could it be optimized? Yes, using a dictionary to count the times the number show up would reduce time complexity to O(n).
+- Worst-case: O(n)
+- Average-case: O(n)
+- Space complexity: O(n)
+- Why this approach? It efficiently counts occurrences using a dictionary. and is very efficient.
+- Could it be optimized? This is already the best option for the problem.
+
+Compare performance and space usage in comments. This is a much more efficient solution than the original O(n^2) approach because it uses a dictionary to count occurrences in a single pass through the list, reducing time complexity from O(n^2) to O(n). The space complexity increases to O(n) due to the dictionary, but this trade-off is worthwhile for the significant performance gain.
+Leave a comment in the solution you refactored explaining how you optimized for performance and/or space compared to your original solution. I took a small hit on space complexity to gain a large improvement in time complexity. I did this by using a dictionary to count occurrences in a single pass through the list instead of nested loops.
 """
 
 
@@ -143,3 +155,19 @@ print(remove_duplicates([4, 5, 4, 6, 5, 7]))  # Example usage
 print(find_pairs([1, 2, 3, 4], 5))  # Example usage
 print(add_n_items(6))  # Example usage
 print(running_total([1, 2, 3, 4]))  # Example usage
+
+
+if __name__ == "__main__":
+    # Demo prints so running the script shows output
+    example = [1, 3, 2, 3, 4, 1, 3]
+    print("most_frequent example ->", most_frequent(example))
+
+    # Quick sanity checks
+    assert most_frequent([1, 1, 2, 2, 2, 3]) == 2
+    assert most_frequent([]) is None
+    # Tied counts: function may return any of the tied values
+    tied = [5, 6, 5, 6]
+    res = most_frequent(tied)
+    assert res in (5, 6)
+
+    print("All quick tests passed.")
