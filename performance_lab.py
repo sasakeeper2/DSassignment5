@@ -7,17 +7,20 @@
 # Output: 3
 
 def most_frequent(numbers):
-    # Your code here
-    pass
+    for num in numbers:
+        if numbers.count(num) == max(numbers.count(n) for n in numbers):
+            return num
+        else:
+            continue
 
 """
 Time and Space Analysis for problem 1:
-- Best-case:
-- Worst-case:
-- Average-case:
-- Space complexity:
-- Why this approach?
-- Could it be optimized?
+- Best-case: O(n)
+- Worst-case: O(n^2)
+- Average-case: O(n^2)
+- Space complexity: O(1)
+- Why this approach? Simple and straightforward using built-in methods.
+- Could it be optimized? Yes, using a dictionary to count the times the number show up would reduce time complexity to O(n).
 """
 
 
@@ -29,17 +32,22 @@ Time and Space Analysis for problem 1:
 # Output: [4, 5, 6, 7]
 
 def remove_duplicates(nums):
-    # Your code here
-    pass
+    seen = set()
+    result = []
+    for num in nums:
+        if num not in seen:
+            seen.add(num)
+            result.append(num)
+    return result
 
 """
 Time and Space Analysis for problem 2:
-- Best-case:
-- Worst-case:
-- Average-case:
-- Space complexity:
-- Why this approach?
-- Could it be optimized?
+- Best-case: O(n)
+- Worst-case: O(n)
+- Average-case: O(n)
+- Space complexity: O(n)
+- Why this approach? Efficiently tracks seen elements using a set while preserving order with a list.
+- Could it be optimized? This is already the best option for the problem.
 """
 
 
@@ -52,17 +60,23 @@ Time and Space Analysis for problem 2:
 # Output: [(1, 4), (2, 3)]
 
 def find_pairs(nums, target):
-    # Your code here
-    pass
+    pairs = []
+    seen = set()
+    for num in nums:
+        complement = target - num
+        if complement in seen:
+            pairs.append((min(num, complement), max(num, complement)))
+        seen.add(num)
+    return list(set(pairs))
 
 """
 Time and Space Analysis for problem 3:
-- Best-case:
-- Worst-case:
-- Average-case:
-- Space complexity:
-- Why this approach?
-- Could it be optimized?
+- Best-case: O(n)
+- Worst-case: O(n)
+- Average-case: O(n)
+- Space complexity: O(n)
+- Why this approach? Uses a set for O(1) lookups to find complements efficiently.
+- Could it be optimized? This is already the best option for the problem rules.
 """
 
 
@@ -75,16 +89,29 @@ Time and Space Analysis for problem 3:
 # add_n_items(6) → should print when resizing happens.
 
 def add_n_items(n):
-    # Your code here
-    pass
+    capacity = 4
+    lst = [None] * capacity
+    size = 0
+
+    for i in range(n):
+        if size == capacity:
+            print(f"Resizing from {capacity} to {capacity * 2}")
+            new_lst = [None] * (capacity * 2)
+            for j in range(size):
+                new_lst[j] = lst[j]
+            lst = new_lst
+            capacity *= 2
+        lst[size] = i
+        size += 1
+    return lst[:size]
 
 """
 Time and Space Analysis for problem 4:
-- When do resizes happen?
-- What is the worst-case for a single append?
-- What is the amortized time per append overall?
-- Space complexity:
-- Why does doubling reduce the cost overall?
+- When do resizes happen? When the current size equals capacity.
+- What is the worst-case for a single append? O(n) during a resize.
+- What is the amortized time per append overall? O(1)
+- Space complexity: O(n)
+- Why does doubling reduce the cost overall? Because it reduces the frequency of resizing operations.
 """
 
 
@@ -98,15 +125,21 @@ Time and Space Analysis for problem 4:
 # Because: [1, 1+2, 1+2+3, 1+2+3+4]
 
 def running_total(nums):
-    # Your code here
-    pass
+    for i in range(1, len(nums)):
+        nums[i] += nums[i - 1]
+    return nums
 
 """
 Time and Space Analysis for problem 5:
-- Best-case:
-- Worst-case:
-- Average-case:
-- Space complexity:
-- Why this approach?
-- Could it be optimized?
+- Best-case: O(n)
+- Worst-case: O(n)
+- Average-case: O(n)
+- Space complexity: O(1)
+- Why this approach? In-place modification saves space.
+- Could it be optimized? This is already the best oprion for both time and space.
 """
+print(most_frequent([1, 3, 2, 3, 4, 1, 3]))  # Example usage
+print(remove_duplicates([4, 5, 4, 6, 5, 7]))  # Example usage
+print(find_pairs([1, 2, 3, 4], 5))  # Example usage
+print(add_n_items(6))  # Example usage
+print(running_total([1, 2, 3, 4]))  # Example usage
